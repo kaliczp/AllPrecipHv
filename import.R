@@ -15,6 +15,7 @@ read.prec <- function(x, printtime = F) {
     xts(onlyHmm, raw.time)
 }
 
+csap <- read.prec(paste0("csap", 2010, ".csv"))['2010']
 for(ttev in 2010:2023) {
-    read.prec(paste0("csap", ttev, ".csv"), printtime=T)
+    csap <- c(csap,read.prec(paste0("csap", ttev, ".csv"))[as.character(ttev)])
 }
