@@ -1,3 +1,5 @@
+Sys.setenv(TZ = "UTC")
+
 read.prec <- function(x, printtime = F) {
     require(xts)
     raw <- read.csv2(x)
