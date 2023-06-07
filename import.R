@@ -1,10 +1,18 @@
-for(ttev in 2010:2023) {
-    csapfilename <- dir(paste0("Hidegvíz/", ttev, "/Hellmann"), patt = "^csap", full.names = TRUE)[1]
-    print(ttev)
-    print(scan(file=csapfilename, what = character(), sep = "\n"))
+read.prec <- function(x, printtime = F) {
+    require(xts)
+    raw <- read.csv2(x)
+    raw.names <- names(raw)
+    if(any(raw.names == "ÚjH.mm.")) {
+        onlyHmm <- raw[,"ÚjH.mm."]
+    } else {
+        onlyHmm <- raw[,"ÚjH.mm"]
+    }
+    raw.time <- as.POSIXct(paste(raw[, "Date"], raw[, "Time"]), format = "%Y.%m.%d %H:%M")
+    if(printtime)
+        print(raw.time)
+    xts(onlyHmm, raw.time)
 }
 
-read.prec <- function(x) {
-    forsep <- scan(file=csapfilename, what = character(), sep = "\n", n = 2)
-    print(grep(";", forsep))
+for(ttev in 2010:2023) {
+    read.prec(paste0("csap", ttev, ".csv"), printtime=T)
 }
