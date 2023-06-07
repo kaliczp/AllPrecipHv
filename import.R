@@ -2,7 +2,7 @@ Sys.setenv(TZ = "UTC")
 
 read.prec <- function(x, printtime = F) {
     require(xts)
-    raw <- read.csv2(x)
+    raw <- read.csv2(x, na.strings = c("NA","-"))
     raw.names <- names(raw)
     if(any(raw.names == "ÚjH.mm.")) {
         onlyHmm <- raw[,"ÚjH.mm."]
